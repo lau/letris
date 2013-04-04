@@ -2,9 +2,12 @@
 module Letris
   class Board
     attr_accessor :current_piece
+    attr_reader :current_piece_pos
     
     BOARD_WIDTH = 10
     BOARD_HEIGHT = 20
+    PIECE_INITIAL_POSITION_X = 4
+    PIECE_INITIAL_POSITION_Y = 19
 
     def initialize
       @rows = []
@@ -13,7 +16,7 @@ module Letris
     end
 
     def init_piece_pos
-      @current_piece_pos = [5,19]
+      @current_piece_pos = [PIECE_INITIAL_POSITION_X, PIECE_INITIAL_POSITION_Y]
     end
 
     def cur_piece_pos_x
@@ -63,6 +66,11 @@ module Letris
       return 'X' if current_piece_has_tile_at?(x, y) #x==@current_piece_pos[0] && y == @current_piece_pos[1]
       return 'B' if @rows[x][y]
       " "
+    end
+
+    def tile_for_xy_empty?(x, y)
+      return true if tile_for_xy(x, y) == " "
+      false
     end
 
     def current_piece_has_tile_at?(x, y)

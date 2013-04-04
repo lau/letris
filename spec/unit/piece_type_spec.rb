@@ -1,4 +1,4 @@
-require_relative 'spec_helper'
+require_relative '../spec_helper'
 
 describe Letris::PieceType do
   it "must find all pieces" do
