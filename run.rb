@@ -60,5 +60,10 @@ loop do
     draw_board board
   end
 
+  if board.is_game_over?
+    puts "GAME OVER"
+    break
+  end
+
   sleep SLEEP_FOR_LOOP
 end

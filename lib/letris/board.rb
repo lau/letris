@@ -13,6 +13,11 @@ module Letris
       @rows = []
       BOARD_HEIGHT.times { @rows << [] }
       init_piece_pos
+      @game_over_state = false
+    end
+
+    def is_game_over?
+      @game_over_state
     end
 
     def current_piece=(piece)
@@ -30,6 +35,10 @@ module Letris
 
     def cur_piece_pos_y
       @current_piece_pos[1]
+    end
+
+    def add_new_piece_by_name(name)
+      self.current_piece = Piece.new(Letris::PieceType.by_name(name))
     end
 
     def get_next_piece
@@ -52,6 +61,13 @@ module Letris
         4.times do |x|
           @rows[cur_piece_pos_x+x][cur_piece_pos_y+y] = "X" if @current_piece.has_tile?(x,y)
         end
+      end
+      check_for_game_over
+    end
+
+    def check_for_game_over
+      width.times do |x|
+        @game_over_state = true if current_piece_has_tile_at?(x, 20)
       end
     end
 
