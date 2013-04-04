@@ -1,7 +1,7 @@
 # coding: utf-8
 module Letris
   class Board
-    attr_accessor :current_piece
+    attr_reader :current_piece
     attr_reader :current_piece_pos
     
     BOARD_WIDTH = 10
@@ -12,6 +12,11 @@ module Letris
     def initialize
       @rows = []
       BOARD_HEIGHT.times { @rows << [] }
+      init_piece_pos
+    end
+
+    def current_piece=(piece)
+      @current_piece = piece
       init_piece_pos
     end
 
@@ -34,7 +39,7 @@ module Letris
 
     def move_piece_down
       # if y-pos is 0, we are at the bottom row
-      if @current_piece_pos[1] == 0
+      if @current_piece_pos[1] == 0 || would_current_piece_collide_if_moved_down?
         place_current_piece_on_board
         get_next_piece
       end
@@ -70,6 +75,16 @@ module Letris
 
     def tile_for_xy_empty?(x, y)
       return true if tile_for_xy(x, y) == " "
+      false
+    end
+
+    def would_current_piece_collide_if_moved_down?
+      return true if cur_piece_pos_y == 0 # the current piece is on the bottom row and has met the floor
+      width.times do |x|
+        # if current piece has a tile at a give position x for current y AND
+        # there is a piece on the board for the line below that, we have a collision
+        return true if (current_piece_has_tile_at?(x, cur_piece_pos_y) && !tile_for_xy_empty?(x, cur_piece_pos_y-1))
+      end
       false
     end
 

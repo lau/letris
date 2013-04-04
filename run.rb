@@ -30,7 +30,7 @@ term = `stty -g`
 
 start = Time.now
 SLEEP_FOR_LOOP = 0.02
-INITIAL_FALLING_SPEED = 0.4
+INITIAL_FALLING_SPEED = 0.1
 
 loop do
   if STDIN.ready?
