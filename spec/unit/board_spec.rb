@@ -9,7 +9,6 @@ describe Letris::Board do
     Letris::Board.new.height.must_equal 20
   end
 
-
   describe "When trying to move a piece left and the wall is in the way" do
     before do
       @board = Letris::Board.new

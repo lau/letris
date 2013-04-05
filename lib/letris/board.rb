@@ -146,12 +146,7 @@ module Letris
 
     def would_current_piece_collide_if_moved_down?
       return true if cur_piece_pos_y == 0 # the current piece is on the bottom row and has met the floor
-      width.times do |x|
-        # if current piece has a tile at a give position x for current y AND
-        # there is a piece on the board for the line below that, we have a collision
-        return true if (current_piece_has_tile_at?(x, cur_piece_pos_y) && !tile_for_xy_empty?(x, cur_piece_pos_y-1))
-      end
-      false
+      would_piece_collide_at_position?(cur_piece_pos_x, cur_piece_pos_y-1)
     end
 
     def current_piece_has_tile_at?(x, y)
