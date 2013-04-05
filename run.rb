@@ -44,12 +44,12 @@ loop do
   end
 
   if command=='h'
-    board.move_piece_left 
+    board.try_move_piece_left 
     draw_board board
   end
   
   if command=='l'
-    board.move_piece_right 
+    board.try_move_piece_right 
     draw_board board
   end
 

@@ -78,6 +78,24 @@ module Letris
       end
     end
 
+    def try_move_piece_left
+      if would_piece_collide_at_position?(cur_piece_pos_x-1, cur_piece_pos_y)
+        return false
+      else
+        move_piece_left
+        return true
+      end
+    end
+
+    def try_move_piece_right
+      if would_piece_collide_at_position?(cur_piece_pos_x+1, cur_piece_pos_y)
+        return false
+      else
+        move_piece_right
+        return true
+      end
+    end
+
     def move_piece_left
       @current_piece_pos[0] = @current_piece_pos[0]-1
     end
@@ -98,6 +116,17 @@ module Letris
 
     def tile_for_xy_empty?(x, y)
       return true if tile_for_xy(x, y) == " "
+      false
+    end
+
+    def would_piece_collide_at_position?(p_x, p_y, piece = @current_piece)
+      4.times do |y|
+        4.times do |x|
+          if p_y+y <= 19 # we don't look at rows above no. 19 (top row)
+            return true if @current_piece.has_tile?(x,y) && @rows[p_y+y][p_x+x] 
+          end
+        end
+      end
       false
     end
 

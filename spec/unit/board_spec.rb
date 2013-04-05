@@ -9,6 +9,56 @@ describe Letris::Board do
     Letris::Board.new.height.must_equal 20
   end
 
+  describe "When trying to move a piece left and another piece is in the way" do
+    before do
+      @board = Letris::Board.new
+      @board.add_new_piece_by_name(:j)
+      20.times { @board.move_piece_down }
+
+      @board.add_new_piece_by_name(:o)
+      2.times { @board.move_piece_right }
+      18.times { @board.move_piece_down }
+
+      @current_piece_pos = @board.current_piece_pos
+    end
+
+    it 'should return false' do
+      @board.try_move_piece_left.must_equal false
+    end
+
+    it 'should still be in the same position' do
+      @board.try_move_piece_left
+      @board.current_piece_pos.must_equal @current_piece_pos 
+    end
+  end
+
+  describe "When trying to move a piece left or right and another piece is NOT in the way" do
+    before do
+      @board = Letris::Board.new
+
+      @board.add_new_piece_by_name(:o)
+      18.times { @board.move_piece_down }
+
+      @current_piece_pos = @board.current_piece_pos
+    end
+
+    it 'should return true' do
+      @board.try_move_piece_left.must_equal true
+    end
+
+    it 'should be moved to the left' do
+      @board.try_move_piece_left
+      @board.current_piece_pos.must_equal [3,1] 
+    end
+
+    it 'should be moved to the right' do
+      @board.try_move_piece_right
+      @board.current_piece_pos.must_equal [5,1] 
+    end
+
+  end
+
+
   describe "When there is a filled row" do
     before do
       @board = Letris::Board.new
