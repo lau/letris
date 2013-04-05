@@ -31,7 +31,7 @@ term = `stty -g`
 
 start = Time.now
 SLEEP_FOR_LOOP = 0.02
-INITIAL_FALLING_SPEED = 0.3
+INITIAL_FALLING_SPEED = 0.2
 
 loop do
   if STDIN.ready?
@@ -57,6 +57,9 @@ loop do
 
   if Time.now-start > INITIAL_FALLING_SPEED 
     board.move_piece_down
+    if board.filled_row_count > 0
+      board.clear_rows
+    end
     start = Time.now
     draw_board board
   end

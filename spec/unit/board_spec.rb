@@ -121,6 +121,16 @@ describe Letris::Board do
     it "the board should return the number of filled rows" do
       @board.filled_row_count.must_equal 1
     end
+
+    describe "when clearing the row" do
+      before do
+        @returned = @board.clear_rows
+      end
+
+      it "should return the number of cleared rows" do
+        @returned.must_equal 1
+      end
+    end
   end
 
   describe "When a piece is added to the board and the top of the piece is above the top" do
@@ -199,7 +209,5 @@ describe Letris::Board do
         @board.is_game_over?.must_equal false
       end
     end
-
   end
-
 end

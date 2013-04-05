@@ -23,10 +23,24 @@ module Letris
       @game_over_state
     end
 
+    def filled_row_indicies
+      row_indicies = []
+      @rows.each_with_index { |row, row_number| row_indicies << row_number if row.compact.size == width }
+      row_indicies
+    end
+
     def filled_row_count
-      count = 0
-      @rows.each { |row| count = count + 1 if row.compact.size == width }
-      count
+      filled_row_indicies.size
+    end
+
+    def clear_rows
+      counter = 0
+      filled_row_indicies.each do |index|
+        @rows.delete_at(index)
+        @rows << [] # add new empty line at top
+        counter = counter + 1
+      end
+      counter 
     end
 
     def current_piece=(piece)
