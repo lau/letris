@@ -20,6 +20,12 @@ module Letris
       @game_over_state
     end
 
+    def filled_row_count
+      count = 0
+      @rows.each { |row| count = count + 1 if row.compact.size == width }
+      count
+    end
+
     def current_piece=(piece)
       @current_piece = piece
       init_piece_pos
@@ -51,15 +57,16 @@ module Letris
       if @current_piece_pos[1] == 0 || would_current_piece_collide_if_moved_down?
         place_current_piece_on_board
         get_next_piece
+      else
+        @current_piece_pos[1] = @current_piece_pos[1]-1 
       end
-      @current_piece_pos[1] = @current_piece_pos[1]-1 
     end
 
     def place_current_piece_on_board
       # 4 times because 4 is the maximum width and height of a piece. TODO: don't use a hardcoded number like this 
       4.times do |y|
         4.times do |x|
-          @rows[cur_piece_pos_x+x][cur_piece_pos_y+y] = "X" if @current_piece.has_tile?(x,y)
+          @rows[cur_piece_pos_y+y][cur_piece_pos_x+x] = "X" if @current_piece.has_tile?(x,y) && cur_piece_pos_y+y <= 19
         end
       end
       check_for_game_over
@@ -84,8 +91,8 @@ module Letris
     end
 
     def tile_for_xy(x, y)
-      return 'X' if current_piece_has_tile_at?(x, y) #x==@current_piece_pos[0] && y == @current_piece_pos[1]
-      return 'B' if @rows[x][y]
+      return 'X' if current_piece_has_tile_at?(x, y)
+      return 'B' if @rows[y][x]
       " "
     end
 

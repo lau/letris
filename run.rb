@@ -5,6 +5,7 @@ include Letris
 def draw_board(board)
   system("clear")
   buf = '' 
+  #buf = buf + "rows: #{board.filled_row_count}\n"
   y_pos = 19
   board.height.times do |y|
     buf = buf + '' 

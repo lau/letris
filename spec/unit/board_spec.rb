@@ -9,6 +9,34 @@ describe Letris::Board do
     Letris::Board.new.height.must_equal 20
   end
 
+  describe "When there is a filled row" do
+    before do
+      @board = Letris::Board.new
+      @board.add_new_piece_by_name(:o)
+      4.times { @board.move_piece_left }
+      20.times { @board.move_piece_down }
+
+      @board.add_new_piece_by_name(:o)
+      2.times { @board.move_piece_left }
+      20.times { @board.move_piece_down }
+
+      @board.add_new_piece_by_name(:o)
+      20.times { @board.move_piece_down }
+
+      @board.add_new_piece_by_name(:o)
+      2.times { @board.move_piece_right }
+      20.times { @board.move_piece_down }
+
+      @board.add_new_piece_by_name(:l)
+      4.times { @board.move_piece_right }
+      20.times { @board.move_piece_down }
+    end
+
+    it "the board should return the number of filled rows" do
+      @board.filled_row_count.must_equal 1
+    end
+  end
+
   describe "When a piece is added to the board and the top of the piece is above the top" do
     before do
       @board = Letris::Board.new
@@ -76,6 +104,10 @@ describe Letris::Board do
         @board.tile_for_xy_empty?(4,2).must_equal false
         @board.tile_for_xy_empty?(5,2).must_equal false
       end 
+
+      it "the board should return the number of filled rows" do
+        @board.filled_row_count.must_equal 0
+      end
 
       it "it's not yet game over" do
         @board.is_game_over?.must_equal false
