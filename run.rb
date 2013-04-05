@@ -5,7 +5,8 @@ include Letris
 def draw_board(board)
   system("clear")
   buf = '' 
-  #buf = buf + "rows: #{board.filled_row_count}\n"
+  buf = buf + "Keys: H: move left. L: move right. R: rotate piece. Q: quit\n"
+  buf = buf + "Lines cleared: #{@lines_cleared}\n"
   y_pos = 19
   board.height.times do |y|
     buf = buf + '' 
@@ -24,6 +25,7 @@ end
 board = Letris::Board.new
 piece = Piece.new(PieceType.by_name :l)
 board.current_piece = piece
+@lines_cleared = 0
 draw_board board
 
 term = `stty -g`
@@ -37,28 +39,24 @@ loop do
   if STDIN.ready?
    command = STDIN.getc
   end
-  
   if command == 'r'
     board.rotate_piece
     draw_board board
   end
-
   if command=='h'
     board.try_move_piece_left 
     draw_board board
   end
-  
   if command=='l'
     board.try_move_piece_right 
     draw_board board
   end
-
   break if command == 'q'
 
   if Time.now-start > INITIAL_FALLING_SPEED 
     board.move_piece_down
     if board.filled_row_count > 0
-      board.clear_rows
+      @lines_cleared = @lines_cleared + board.clear_rows
     end
     start = Time.now
     draw_board board
@@ -68,6 +66,5 @@ loop do
     puts "GAME OVER"
     break
   end
-
   sleep SLEEP_FOR_LOOP
 end
