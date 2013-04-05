@@ -9,6 +9,9 @@ module Letris
     PIECE_INITIAL_POSITION_X = 4
     PIECE_INITIAL_POSITION_Y = 19
 
+    MAX_POSSIBLE_PIECE_HEIGHT = 4
+    MAX_POSSIBLE_PIECE_WIDTH = 4
+
     def initialize
       @rows = []
       BOARD_HEIGHT.times { @rows << [] }
@@ -119,7 +122,18 @@ module Letris
       false
     end
 
+    def is_out_of_bounds_at_position(p_x, p_y, piece = @current_piece)
+      return true if p_x < 0
+      MAX_POSSIBLE_PIECE_HEIGHT.times do |y|
+        MAX_POSSIBLE_PIECE_WIDTH.times do |x|
+          return true if ((x+p_x) > width-1) && piece.has_tile?(x, y)
+        end
+      end
+      false
+    end
+
     def would_piece_collide_at_position?(p_x, p_y, piece = @current_piece)
+      return true if is_out_of_bounds_at_position(p_x, p_y, piece)
       4.times do |y|
         4.times do |x|
           if p_y+y <= 19 # we don't look at rows above no. 19 (top row)
