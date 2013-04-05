@@ -25,7 +25,7 @@ module Letris
 
     def filled_row_indicies
       row_indicies = []
-      @rows.each_with_index { |row, row_number| row_indicies << row_number if row.compact.size == width }
+      @rows.each_with_index { |row, row_number| row_indicies << row_number if is_row_filled?(row) }
       row_indicies
     end
 
@@ -33,10 +33,14 @@ module Letris
       filled_row_indicies.size
     end
 
+    def is_row_filled?(row)
+      row.compact.size == width
+    end
+
     def clear_rows
       counter = 0
-      filled_row_indicies.each do |index|
-        @rows.delete_at(index)
+      @rows.delete_if { |row| is_row_filled?(row) }
+      while @rows.size < 20
         @rows << [] # add new empty line at top
         counter = counter + 1
       end
