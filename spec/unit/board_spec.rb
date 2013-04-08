@@ -28,6 +28,32 @@ describe Letris::Board do
     end
   end
 
+  describe 'When trying to rotate a piece and another brick is in the way' do
+    before do
+      @board = Letris::Board.new
+      # Place an I piece upright at the bottom of the board
+      @board.add_new_piece_by_name(:i)
+      4.times { @board.move_piece_right }
+      20.times { @board.move_piece_down }
+      # Place another I piece almost at the bottom, next to the first one
+      @board.add_new_piece_by_name(:i)
+      3.times { @board.move_piece_right }
+      18.times { @board.move_piece_down }
+    end
+
+
+    it 'should return false' do
+      @board.try_rotate_piece.must_equal false
+    end
+
+    it 'should not be rotated' do
+      @board.try_rotate_piece
+      # If there is a piece at this positiom the second piece
+      # is still upright and thus not rotated
+      @board.current_piece_has_tile_at?(7,4).must_equal true
+    end
+  end 
+
   describe "When trying to move a piece right and the wall is in the way" do
     before do
       @board = Letris::Board.new

@@ -8,12 +8,12 @@ module Letris
            ],
 
      :i => [
-             ["XXXX"],
-
              ["X",
               "X",
               "X",
-              "X"]
+              "X"],
+
+             ["XXXX"]
              ],
 
      :t => [

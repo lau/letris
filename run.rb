@@ -40,7 +40,7 @@ loop do
    command = STDIN.getc
   end
   if command == 'r'
-    board.rotate_piece
+    board.try_rotate_piece
     draw_board board
   end
   if command=='h'

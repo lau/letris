@@ -8,7 +8,6 @@ module Letris
     BOARD_HEIGHT = 20
     PIECE_INITIAL_POSITION_X = 4
     PIECE_INITIAL_POSITION_Y = 19
-
     MAX_POSSIBLE_PIECE_HEIGHT = 4
     MAX_POSSIBLE_PIECE_WIDTH = 4
 
@@ -125,6 +124,17 @@ module Letris
       @current_piece_pos[0] = @current_piece_pos[0]+1
     end
 
+    def try_rotate_piece
+      rotated = @current_piece.dup
+      rotated.change_to_next_state!
+      if would_piece_collide_at_position?(cur_piece_pos_x, cur_piece_pos_y, rotated)
+        return false
+      else
+        rotate_piece
+        return true
+      end
+    end
+
     def rotate_piece
       @current_piece.change_to_next_state!
     end
@@ -152,10 +162,10 @@ module Letris
 
     def would_piece_collide_at_position?(p_x, p_y, piece = @current_piece)
       return true if is_out_of_bounds_at_position(p_x, p_y, piece)
-      4.times do |y|
-        4.times do |x|
+      MAX_POSSIBLE_PIECE_HEIGHT.times do |y|
+        MAX_POSSIBLE_PIECE_WIDTH.times do |x|
           if p_y+y <= 19 # we don't look at rows above no. 19 (top row)
-            return true if @current_piece.has_tile?(x,y) && @rows[p_y+y][p_x+x] 
+            return true if piece.has_tile?(x,y) && @rows[p_y+y][p_x+x] 
           end
         end
       end
