@@ -98,44 +98,46 @@ module Letris
       end
     end
 
-    def try_move_piece_left
+    def move_piece_left
       if would_piece_collide_at_position?(cur_piece_pos_x-1, cur_piece_pos_y)
         return false
       else
-        move_piece_left
+        move_piece_left!
         return true
       end
-    end
-
-    def try_move_piece_right
-      if would_piece_collide_at_position?(cur_piece_pos_x+1, cur_piece_pos_y)
-        return false
-      else
-        move_piece_right
-        return true
-      end
-    end
-
-    def move_piece_left
-      @current_piece_pos[0] = @current_piece_pos[0]-1
     end
 
     def move_piece_right
+      if would_piece_collide_at_position?(cur_piece_pos_x+1, cur_piece_pos_y)
+        return false
+      else
+        move_piece_right!
+        return true
+      end
+    end
+
+    # move piece without checking for collision!
+    def move_piece_left!
+      @current_piece_pos[0] = @current_piece_pos[0]-1
+    end
+
+    # move piece without checking for collision!
+    def move_piece_right!
       @current_piece_pos[0] = @current_piece_pos[0]+1
     end
 
-    def try_rotate_piece
+    def rotate_piece
       rotated = @current_piece.dup
       rotated.change_to_next_state!
       if would_piece_collide_at_position?(cur_piece_pos_x, cur_piece_pos_y, rotated)
         return false
       else
-        rotate_piece
+        rotate_piece!
         return true
       end
     end
 
-    def rotate_piece
+    def rotate_piece!
       @current_piece.change_to_next_state!
     end
 

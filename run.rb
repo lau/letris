@@ -40,15 +40,15 @@ loop do
    command = STDIN.getc
   end
   if command == 'r'
-    board.try_rotate_piece
+    board.rotate_piece
     draw_board board
   end
   if command=='h'
-    board.try_move_piece_left 
+    board.move_piece_left 
     draw_board board
   end
   if command=='l'
-    board.try_move_piece_right 
+    board.move_piece_right 
     draw_board board
   end
   break if command == 'q'

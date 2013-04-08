@@ -13,17 +13,17 @@ describe Letris::Board do
     before do
       @board = Letris::Board.new
       @board.add_new_piece_by_name(:o)
-      4.times { @board.move_piece_left }
+      4.times { @board.move_piece_left! }
       5.times { @board.move_piece_down }
       @current_piece_pos = @board.current_piece_pos
     end
 
     it 'should return false' do
-      @board.try_move_piece_left.must_equal false
+      @board.move_piece_left.must_equal false
     end
 
     it 'should still be in the same position' do
-      @board.try_move_piece_left
+      @board.move_piece_left
       @board.current_piece_pos.must_equal @current_piece_pos 
     end
   end
@@ -33,21 +33,21 @@ describe Letris::Board do
       @board = Letris::Board.new
       # Place an I piece upright at the bottom of the board
       @board.add_new_piece_by_name(:i)
-      4.times { @board.move_piece_right }
+      4.times { @board.move_piece_right! }
       20.times { @board.move_piece_down }
       # Place another I piece almost at the bottom, next to the first one
       @board.add_new_piece_by_name(:i)
-      3.times { @board.move_piece_right }
+      3.times { @board.move_piece_right! }
       18.times { @board.move_piece_down }
     end
 
 
     it 'should return false' do
-      @board.try_rotate_piece.must_equal false
+      @board.rotate_piece.must_equal false
     end
 
     it 'should not be rotated' do
-      @board.try_rotate_piece
+      @board.rotate_piece
       # If there is a piece at this positiom the second piece
       # is still upright and thus not rotated
       @board.current_piece_has_tile_at?(7,4).must_equal true
@@ -58,17 +58,17 @@ describe Letris::Board do
     before do
       @board = Letris::Board.new
       @board.add_new_piece_by_name(:o)
-      4.times { @board.move_piece_right }
+      4.times { @board.move_piece_right! }
       5.times { @board.move_piece_down }
       @current_piece_pos = @board.current_piece_pos
     end
 
     it 'should return false' do
-      @board.try_move_piece_right.must_equal false
+      @board.move_piece_right.must_equal false
     end
 
     it 'should still be in the same position' do
-      @board.try_move_piece_right
+      @board.move_piece_right
       @board.current_piece_pos.must_equal @current_piece_pos 
     end
   end
@@ -80,18 +80,18 @@ describe Letris::Board do
       20.times { @board.move_piece_down }
 
       @board.add_new_piece_by_name(:o)
-      2.times { @board.move_piece_right }
+      2.times { @board.move_piece_right! }
       18.times { @board.move_piece_down }
 
       @current_piece_pos = @board.current_piece_pos
     end
 
     it 'should return false' do
-      @board.try_move_piece_left.must_equal false
+      @board.move_piece_left.must_equal false
     end
 
     it 'should still be in the same position' do
-      @board.try_move_piece_left
+      @board.move_piece_left
       @board.current_piece_pos.must_equal @current_piece_pos 
     end
   end
@@ -107,16 +107,16 @@ describe Letris::Board do
     end
 
     it 'should return true' do
-      @board.try_move_piece_left.must_equal true
+      @board.move_piece_left.must_equal true
     end
 
     it 'should be moved to the left' do
-      @board.try_move_piece_left
+      @board.move_piece_left
       @board.current_piece_pos.must_equal [3,1] 
     end
 
     it 'should be moved to the right' do
-      @board.try_move_piece_right
+      @board.move_piece_right
       @board.current_piece_pos.must_equal [5,1] 
     end
   end
@@ -125,22 +125,22 @@ describe Letris::Board do
     before do
       @board = Letris::Board.new
       @board.add_new_piece_by_name(:o)
-      4.times { @board.move_piece_left }
+      4.times { @board.move_piece_left! }
       20.times { @board.move_piece_down }
 
       @board.add_new_piece_by_name(:o)
-      2.times { @board.move_piece_left }
+      2.times { @board.move_piece_left! }
       20.times { @board.move_piece_down }
 
       @board.add_new_piece_by_name(:o)
       20.times { @board.move_piece_down }
 
       @board.add_new_piece_by_name(:o)
-      2.times { @board.move_piece_right }
+      2.times { @board.move_piece_right! }
       20.times { @board.move_piece_down }
 
       @board.add_new_piece_by_name(:l)
-      4.times { @board.move_piece_right }
+      4.times { @board.move_piece_right! }
       20.times { @board.move_piece_down }
     end
 
