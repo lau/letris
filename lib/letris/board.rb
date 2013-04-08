@@ -83,9 +83,8 @@ module Letris
     end
 
     def place_current_piece_on_board
-      # 4 times because 4 is the maximum width and height of a piece. TODO: don't use a hardcoded number like this 
-      4.times do |y|
-        4.times do |x|
+      MAX_POSSIBLE_PIECE_HEIGHT.times do |y|
+        MAX_POSSIBLE_PIECE_WIDTH.times do |x|
           @rows[cur_piece_pos_y+y][cur_piece_pos_x+x] = "X" if @current_piece.has_tile?(x,y) && cur_piece_pos_y+y <= 19
         end
       end
