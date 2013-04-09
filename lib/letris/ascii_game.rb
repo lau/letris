@@ -15,7 +15,7 @@ module Letris
       buf = '' 
       buf = buf + "Keys: H: move left. L: move right. R: rotate piece. Q: quit\n"
       buf = buf + "Lines cleared: #{lines_cleared}\n"
-      y_pos = 19
+      y_pos = board.height - 1 
       board.height.times do |y|
         buf = buf + '' 
         buf = buf + "║"
