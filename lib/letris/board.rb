@@ -77,9 +77,15 @@ module Letris
       if @current_piece_pos[1] == 0 || would_current_piece_collide_if_moved_down?
         place_current_piece_on_board
         get_next_piece
+        return false
       else
         @current_piece_pos[1] = @current_piece_pos[1]-1 
+        return true
       end
+    end
+
+    def drop_piece
+      loop { break unless move_piece_down }
     end
 
     def place_current_piece_on_board

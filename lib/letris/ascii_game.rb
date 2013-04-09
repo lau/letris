@@ -14,6 +14,7 @@ module Letris
       system("clear")
       buf = '' 
       buf = buf + "Keys: H: move left. L: move right. R: rotate piece. Q: quit\n"
+      buf = buf + "F: drop piece\n"
       buf = buf + "Lines cleared: #{lines_cleared}\n"
       y_pos = board.height - 1 
       board.height.times do |y|
@@ -57,12 +58,16 @@ module Letris
           board.rotate_piece
           render_board board
         end
-        if command=='h'
+        if command == 'h'
           board.move_piece_left 
           render_board board
         end
-        if command=='l'
+        if command == 'l'
           board.move_piece_right 
+          render_board board
+        end
+        if command == 'f'
+          board.drop_piece
           render_board board
         end
         break if command == 'q'

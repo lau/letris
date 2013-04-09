@@ -191,7 +191,20 @@ describe Letris::Board do
     end
   end
 
-  describe "On an empty board, when moving a piece to the bottom" do
+  describe 'On an empty board, when calling drop piece' do
+    before do
+      @board = Letris::Board.new
+      @piece = Letris::Piece.new(Letris::PieceType.by_name(:s)) 
+      @board.current_piece = @piece
+      @result = @board.drop_piece
+    end
+
+    it 'the piece must be dropped' do
+      @board.tile_for_xy_empty?(4,0).must_equal false
+    end
+  end
+
+  describe 'On an empty board, when moving a piece to the bottom' do
     before do
       @board = Letris::Board.new
       @piece = Letris::Piece.new(Letris::PieceType.by_name(:s)) 
@@ -211,6 +224,19 @@ describe Letris::Board do
     it "the tile must be a capitalized letter equal to the name of the piece type" do
       20.times { @board.move_piece_down }
       @board.tile_for_xy(5,0).must_equal 'S'
+    end
+
+    describe "when trying to move down a piece and it is successful" do
+      it 'should return true' do
+        @board.move_piece_down.must_equal true
+      end
+    end
+
+    describe "when trying to move down a piece and there is a something in the way below" do
+      it 'should return false' do
+        19.times { @board.move_piece_down }
+        @board.move_piece_down.must_equal false
+      end
     end
 
     describe "when moving down a piece on top of an existing piece" do
