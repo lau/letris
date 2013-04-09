@@ -2,7 +2,7 @@
 require 'io/wait'
 SLEEP_FOR_LOOP = 0.02
 INITIAL_FALLING_SPEED = 0.2
-PIECE_COLORS = { :i => 36, :j => 34, :l =>93, :o =>33, :s =>32, :t => 35,  :z => 31 }
+PIECE_COLORS = { :i => 36, :j => 34, :l => 93, :o => 33, :s => 32, :t => 35, :z => 31 }
 module Letris
   class AsciiRenderer
     def colorized(piece_name)
