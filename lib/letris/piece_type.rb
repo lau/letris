@@ -92,7 +92,7 @@ module Letris
     end  
 
     def self.get_random
-      all.values[rand(PIECE_SHAPES.size-1)]
+      all.values[rand(PIECE_SHAPES.size)]
     end
 
     def initialize(name, states)
