@@ -12,6 +12,10 @@ module Letris
       @current_state = piece_type.states[0]
     end
 
+    def name
+      @piece_type.name
+    end
+
     def has_tile?(x,y)
       @current_state.has_tile?(x,y)
     end

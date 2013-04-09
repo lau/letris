@@ -208,6 +208,11 @@ describe Letris::Board do
       @board.tile_for_xy_empty?(6,1).must_equal false
     end
 
+    it "the tile must be a capitalized letter equal to the name of the piece type" do
+      20.times { @board.move_piece_down }
+      @board.tile_for_xy(5,0).must_equal 'S'
+    end
+
     describe "when moving down a piece on top of an existing piece" do
       before do
         @board = Letris::Board.new

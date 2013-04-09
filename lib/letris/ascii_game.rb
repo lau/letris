@@ -1,25 +1,33 @@
+# coding: UTF-8
 require 'io/wait'
 SLEEP_FOR_LOOP = 0.02
 INITIAL_FALLING_SPEED = 0.2
+PIECE_COLORS = { :i => 36, :j => 34, :l =>93, :o =>33, :s =>32, :t => 35,  :z => 31 }
 module Letris
   class AsciiRenderer
-    def render_board(board)
+    def colorized(piece_name)
+      piece_name == ' ' ? text = ' ' : text  = "X"
+      "\e[1;#{PIECE_COLORS[piece_name.downcase.to_sym]};40m"+text+"\e[0m"
+    end
+
+    def render_board(board, lines_cleared)
       system("clear")
       buf = '' 
       buf = buf + "Keys: H: move left. L: move right. R: rotate piece. Q: quit\n"
-      buf = buf + "Lines cleared: #{@lines_cleared}\n"
+      buf = buf + "Lines cleared: #{lines_cleared}\n"
       y_pos = 19
       board.height.times do |y|
         buf = buf + '' 
-        buf = buf + "|"
+        buf = buf + "║"
+        board.width.times 
         board.width.times do |x| 
-          buf = buf + "#{board.tile_for_xy(x,y_pos)}" 
+          buf = buf + "#{colorized board.tile_for_xy(x,y_pos)}" 
         end
-        buf = buf + "|"
+        buf = buf + "║"
         buf = buf + "\n"
         y_pos = y_pos - 1
       end
-      buf = buf + "------------"
+      buf = buf + "╚══════════╝"
       puts buf
     end
   end
@@ -27,7 +35,7 @@ module Letris
   class AsciiGame
     def render_board(board)
       @renderer ||= Letris::AsciiRenderer.new
-      @renderer.render_board board
+      @renderer.render_board board, @lines_cleared
     end
 
     def run

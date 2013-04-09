@@ -85,10 +85,14 @@ module Letris
     def place_current_piece_on_board
       MAX_POSSIBLE_PIECE_HEIGHT.times do |y|
         MAX_POSSIBLE_PIECE_WIDTH.times do |x|
-          @rows[cur_piece_pos_y+y][cur_piece_pos_x+x] = "X" if @current_piece.has_tile?(x,y) && cur_piece_pos_y+y <= 19
+          @rows[cur_piece_pos_y+y][cur_piece_pos_x+x] = current_piece_tile if @current_piece.has_tile?(x,y) && cur_piece_pos_y+y <= 19
         end
       end
       check_for_game_over
+    end
+
+    def current_piece_tile
+      @current_piece.name.to_s.upcase
     end
 
     def check_for_game_over
@@ -141,8 +145,8 @@ module Letris
     end
 
     def tile_for_xy(x, y)
-      return 'X' if current_piece_has_tile_at?(x, y)
-      return 'B' if @rows[y][x]
+      return current_piece_tile if current_piece_has_tile_at?(x, y)
+      return @rows[y][x] if @rows[y][x]
       " "
     end
 
