@@ -1,3 +1,6 @@
+[![Build
+Status](https://travis-ci.org/lau/letris.png)](https://travis-ci.org/lau/letris)
+
 Tetris clone in Ruby. Just because.
 
 Requires Ruby 1.9+! It doesn't work with Ruby 1.8.
