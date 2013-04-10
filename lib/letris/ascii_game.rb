@@ -1,8 +1,18 @@
 # coding: UTF-8
 require 'io/wait'
 SLEEP_FOR_LOOP = 0.02
-INITIAL_FALLING_SPEED = 0.2
 PIECE_COLORS = { :i => 36, :j => 34, :l => 93, :o => 33, :s => 32, :t => 35, :z => 31 }
+LEVELS = { 0 => 0.8,
+            1 => 0.7167,
+            2 => 0.6333,
+            3 => 0.55,
+            4 => 0.4667,
+            5 => 0.3833,
+            6 => 0.3,
+            7 => 0.2166,
+            8 => 0.1333,
+            9 => 0.1 
+   }
 module Letris
   class AsciiRenderer
     def colorized(piece_name)
@@ -39,6 +49,12 @@ module Letris
       @renderer.render_board board, @lines_cleared
     end
 
+    def falling_speed
+      level = (@lines_cleared/10.0).floor
+      level = 9 if level > 9
+      LEVELS[level]
+    end
+
     def run
       board = Letris::Board.new
       piece = Piece.new(PieceType.by_name :l)
@@ -72,7 +88,7 @@ module Letris
         end
         break if command == 'q'
 
-        if Time.now-start > INITIAL_FALLING_SPEED 
+        if Time.now-start > falling_speed 
           board.move_piece_down
           if board.filled_row_count > 0
             @lines_cleared = @lines_cleared + board.clear_rows
