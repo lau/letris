@@ -57,7 +57,7 @@ module Letris
 
     def run
       board = Letris::Board.new
-      piece = Piece.new(PieceType.by_name :l)
+      piece = Piece.new(PieceType.get_random)
       board.current_piece = piece
       @lines_cleared = 0
       render_board board
