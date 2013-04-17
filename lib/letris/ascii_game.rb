@@ -21,7 +21,6 @@ module Letris
     end
 
     def render_board(board, lines_cleared)
-      system("clear")
       buf = '' 
       buf = buf + "Keys: H: move left. L: move right. R: rotate piece. Q: quit\n"
       buf = buf + "F: drop piece\n"
@@ -39,14 +38,15 @@ module Letris
         y_pos = y_pos - 1
       end
       buf = buf + "╚══════════╝"
-      puts buf
+      buf
     end
   end
 
   class AsciiGame
     def render_board(board)
       @renderer ||= Letris::AsciiRenderer.new
-      @renderer.render_board board, @lines_cleared
+      system("clear")
+      puts @renderer.render_board board, @lines_cleared
     end
 
     def falling_speed
