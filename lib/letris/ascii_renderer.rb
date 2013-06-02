@@ -8,17 +8,17 @@ module Letris
     end
 
     def render_board(board, lines_cleared)
-      buf = '' 
+      buf = ''
       buf = buf + "Keys: H: move left. L: move right. R: rotate piece. Q: quit\n"
       buf = buf + "F: drop piece\n"
       buf = buf + "Lines cleared: #{lines_cleared}\n"
-      y_pos = board.height - 1 
+      y_pos = board.height - 1
       board.height.times do |y|
-        buf = buf + '' 
+        buf = buf + ''
         buf = buf + "║"
-        board.width.times 
-        board.width.times do |x| 
-          buf = buf + "#{colorized board.tile_for_xy(x,y_pos)}" 
+        board.width.times
+        board.width.times do |x|
+          buf = buf + "#{colorized board.tile_for_xy(x,y_pos)}"
         end
         buf = buf + "║"
         buf = buf + "\n"

@@ -81,27 +81,27 @@ module Letris
              [" X",
               "XX",
               "X "]
-           ] 
+           ]
     }
     def self.all
       @@pieces ||= {}.tap { |hash| PIECE_SHAPES.each { |k,v| hash[k] = PieceType.new(k,v) } }
     end
-    
+
     def self.by_name(name)
-      all[name] 
-    end  
+      all[name]
+    end
 
     def self.get_random
       all.values[rand(PIECE_SHAPES.size)]
     end
 
     def initialize(name, states)
-      @name = name 
+      @name = name
       @states = states.map {|state| State.new(self, state) }
     end
 
     def to_s
-      name.to_s 
+      name.to_s
     end
 
     class State
