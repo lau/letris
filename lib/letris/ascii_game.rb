@@ -46,24 +46,23 @@ module Letris
           render_board board
         end
         if command == 'h'
-          board.move_piece_left 
+          board.move_piece_left
           render_board board
         end
         if command == 'l'
-          board.move_piece_right 
+          board.move_piece_right
           render_board board
         end
         if command == 'f'
           board.drop_piece
+          @lines_cleared = @lines_cleared + board.clear_rows
           render_board board
         end
         break if command == 'q'
 
-        if Time.now-start > falling_speed 
+        if Time.now-start > falling_speed
           board.move_piece_down
-          if board.filled_row_count > 0
-            @lines_cleared = @lines_cleared + board.clear_rows
-          end
+          @lines_cleared = @lines_cleared + board.clear_rows
           start = Time.now
           render_board board
         end
