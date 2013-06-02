@@ -3,7 +3,7 @@ module Letris
   class Board
     attr_reader :current_piece
     attr_reader :current_piece_pos
-    
+
     BOARD_WIDTH = 10
     BOARD_HEIGHT = 20
     PIECE_INITIAL_POSITION_X = 4
@@ -43,7 +43,7 @@ module Letris
         @rows << [] # add new empty line at top
         counter = counter + 1
       end
-      counter 
+      counter
     end
 
     def current_piece=(piece)
@@ -79,7 +79,7 @@ module Letris
         get_next_piece
         return false
       else
-        @current_piece_pos[1] = @current_piece_pos[1]-1 
+        @current_piece_pos[1] = @current_piece_pos[1]-1
         return true
       end
     end
@@ -91,7 +91,7 @@ module Letris
     def place_current_piece_on_board
       MAX_POSSIBLE_PIECE_HEIGHT.times do |y|
         MAX_POSSIBLE_PIECE_WIDTH.times do |x|
-          @rows[cur_piece_pos_y+y][cur_piece_pos_x+x] = current_piece_tile if @current_piece.has_tile?(x,y) && cur_piece_pos_y+y <= 19
+          @rows[cur_piece_pos_y+y][cur_piece_pos_x+x] = current_piece_tile if @current_piece.has_tile?(x,y) && cur_piece_pos_y+y < BOARD_HEIGHT
         end
       end
       check_for_game_over
@@ -103,7 +103,7 @@ module Letris
 
     def check_for_game_over
       width.times do |x|
-        @game_over_state = true if current_piece_has_tile_at?(x, 20)
+        @game_over_state = true if current_piece_has_tile_at?(x, BOARD_HEIGHT)
       end
     end
 
@@ -176,7 +176,7 @@ module Letris
       MAX_POSSIBLE_PIECE_HEIGHT.times do |y|
         MAX_POSSIBLE_PIECE_WIDTH.times do |x|
           if p_y+y <= 19 # we don't look at rows above no. 19 (top row)
-            return true if piece.has_tile?(x,y) && @rows[p_y+y][p_x+x] 
+            return true if piece.has_tile?(x,y) && @rows[p_y+y][p_x+x]
           end
         end
       end
