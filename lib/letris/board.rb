@@ -39,7 +39,7 @@ module Letris
     def clear_rows
       counter = 0
       @rows.delete_if { |row| is_row_filled?(row) }
-      while @rows.size < 20
+      while @rows.size < BOARD_HEIGHT
         @rows << [] # add new empty line at top
         counter = counter + 1
       end
@@ -175,7 +175,7 @@ module Letris
       return true if is_out_of_bounds_at_position(p_x, p_y, piece)
       MAX_POSSIBLE_PIECE_HEIGHT.times do |y|
         MAX_POSSIBLE_PIECE_WIDTH.times do |x|
-          if p_y+y <= 19 # we don't look at rows above no. 19 (top row)
+          if p_y+y < BOARD_HEIGHT # we don't look at rows above the top of the board
             return true if piece.has_tile?(x,y) && @rows[p_y+y][p_x+x]
           end
         end
